@@ -183,9 +183,9 @@ class QobuzDL:
         with open(txt_file, "r") as txt:
             try:
                 urls = [
-                    line.replace("\n", "")
+                    line.strip()
                     for line in txt.readlines()
-                    if not line.strip().startswith("#")
+                    if line.strip() and not line.strip().startswith("#")
                 ]
             except Exception as e:
                 logger.error(f"{RED}Invalid text file: {e}")

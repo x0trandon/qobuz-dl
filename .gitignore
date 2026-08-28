@@ -1,2 +1,4 @@
 Qobuz Downloads
 __pycache__
+qobuz_dl.egg-info/
+*.orig.bak
