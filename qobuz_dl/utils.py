@@ -166,6 +166,27 @@ def format_duration(duration):
     return time.strftime("%H:%M:%S", time.gmtime(duration))
 
 
+def expand_directory(directory):
+    """Expand `~` and date tokens in a download directory.
+
+    Supported tokens are `{year}`, `{month}` and `{day}`, filled with
+    today's date, so a configured folder like `~/audio/library/{year}`
+    lands in `~/audio/library/2026` all year and rolls over on its own.
+    Note these are the *download* date -- `folder_format`'s `{year}` is
+    the album's release year, a different thing.
+
+    strftime codes are deliberately not used: `%` is interpolation
+    syntax to configparser and can't survive a round trip through
+    config.ini. Only applied to the configured root, never to album or
+    playlist names.
+    """
+    now = time.localtime()
+    directory = os.path.expanduser(directory)
+    for token, code in (("{year}", "%Y"), ("{month}", "%m"), ("{day}", "%d")):
+        directory = directory.replace(token, time.strftime(code, now))
+    return directory
+
+
 def create_and_return_dir(directory):
     fix = os.path.normpath(directory)
     os.makedirs(fix, exist_ok=True)

@@ -17,6 +17,7 @@ from qobuz_dl.utils import (
     smart_discography_filter,
     format_duration,
     create_and_return_dir,
+    expand_directory,
     PartialFormatter,
 )
 
@@ -53,7 +54,7 @@ class QobuzDL:
         track_format="{tracknumber}. {tracktitle}",
         smart_discography=False,
     ):
-        self.directory = create_and_return_dir(directory)
+        self.directory = create_and_return_dir(expand_directory(directory))
         self.quality = quality
         self.embed_art = embed_art
         self.lucky_limit = lucky_limit

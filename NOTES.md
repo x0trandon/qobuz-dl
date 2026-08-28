@@ -52,6 +52,23 @@ qobuz-dl dl https://play.qobuz.com/album/<id>
 qobuz-dl fun -l 15
 ```
 
+## Where downloads land
+
+`default_folder` in `config.ini` supports date tokens, expanded at run time:
+
+```
+default_folder = ~/audio/library/{year}
+```
+
+`{year}` / `{month}` / `{day}` are the **download** date, so the folder rolls
+over on its own each January -- no yearly hand-edit. (Don't confuse this with
+`folder_format`'s `{year}`, which is the album's *release* year.)
+
+strftime codes like `%Y` do **not** work here: `%` is interpolation syntax to
+configparser, so `cli.py` errors out reading a config that contains one.
+Expansion lives in `utils.expand_directory`, applied only to the configured
+root -- never to album or playlist names, which can contain a literal `{`.
+
 Useful flags:
 - `-q 6` CD lossless 16/44.1 · `-q 7` 24-bit ≤96kHz · `-q 27` max hi-res
   (default here is 27; you get the highest the track actually has)
@@ -63,6 +80,8 @@ Useful flags:
 ## Files added/changed in this clone (not upstream)
 
 - `qobuz_dl/qopy.py` — token-auth patch (backup: `qobuz_dl/qopy.py.orig.bak`)
-- `qobuz_dl/core.py` — blank-line fix in the `-f` text-file reader
+- `qobuz_dl/utils.py` — `expand_directory()` for `{year}` folder tokens
+- `qobuz_dl/core.py` — blank-line fix in the `-f` text-file reader; download
+  root now goes through `expand_directory()`
 - `set_token.py` — helper to store the token raw into config.ini
 - `NOTES.md` — this file
