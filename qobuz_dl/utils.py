@@ -170,8 +170,8 @@ def expand_directory(directory):
     """Expand `~` and date tokens in a download directory.
 
     Supported tokens are `{year}`, `{month}` and `{day}`, filled with
-    today's date, so a configured folder like `~/audio/library/{year}`
-    lands in `~/audio/library/2026` all year and rolls over on its own.
+    today's date, so a configured folder like `~/audio/library/songs/{year}`
+    lands in `~/audio/library/songs/2026` all year and rolls over on its own.
     Note these are the *download* date -- `folder_format`'s `{year}` is
     the album's release year, a different thing.
 

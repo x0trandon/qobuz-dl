@@ -57,7 +57,7 @@ qobuz-dl fun -l 15
 `default_folder` in `config.ini` supports date tokens, expanded at run time:
 
 ```
-default_folder = ~/audio/library/{year}
+default_folder = ~/audio/library/songs/{year}
 ```
 
 `{year}` / `{month}` / `{day}` are the **download** date, so the folder rolls
